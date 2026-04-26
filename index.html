@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mesta Cine - Películas familiares para ver juntos. Tu cine familiar en casa.">
+    <title>Mesta Cine 🎬 | Cine Familiar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ===== NAVBAR ===== -->
+    <nav id="navbar" class="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-brand" id="brand-home">
+                <span class="brand-icon">🎬</span>
+                <span class="brand-text">Mesta<span class="brand-accent">Cine</span></span>
+            </div>
+            <div class="navbar-actions">
+                <div class="search-box" id="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                    <input type="text" id="search-input" placeholder="Buscar película..." autocomplete="off">
+                </div>
+                <button class="btn-admin" id="btn-admin" title="Administrar películas">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="hero" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">🍿 Cine Familiar</div>
+            <h1 class="hero-title">Bienvenidos al<br><span class="gradient-text">Cine Mesta</span></h1>
+            <p class="hero-subtitle">Películas para disfrutar juntos en familia. Selecciona una película y a disfrutar.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number" id="stat-movies">0</span>
+                    <span class="stat-label">Películas</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="stat-genres">0</span>
+                    <span class="stat-label">Géneros</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-glow"></div>
+    </section>
+
+    <!-- ===== GENRE FILTER ===== -->
+    <section id="filters" class="filters-section">
+        <div class="filters-container">
+            <button class="filter-chip active" data-genre="all">🎬 Todas</button>
+            <!-- Dynamic genre chips added by JS -->
+        </div>
+    </section>
+
+    <!-- ===== MOVIE GRID ===== -->
+    <section id="catalog" class="catalog-section">
+        <div class="section-header">
+            <h2 class="section-title">🎬 Catálogo</h2>
+            <span class="movie-count" id="movie-count"></span>
+        </div>
+        <div id="movies-grid" class="movies-grid">
+            <!-- Dynamic movie cards -->
+        </div>
+        <div id="empty-state" class="empty-state hidden">
+            <div class="empty-icon">🎥</div>
+            <h3>No hay películas aún</h3>
+            <p>Agrega películas desde el panel de administración</p>
+            <button class="btn-primary" id="btn-add-first">+ Agregar primera película</button>
+        </div>
+        <div id="no-results" class="empty-state hidden">
+            <div class="empty-icon">🔍</div>
+            <h3>Sin resultados</h3>
+            <p>Intenta con otro término de búsqueda</p>
+        </div>
+    </section>
+
+    <!-- ===== VIDEO PLAYER MODAL ===== -->
+    <div id="player-modal" class="modal hidden">
+        <div class="modal-backdrop" id="player-backdrop"></div>
+        <div class="player-container">
+            <div class="player-header">
+                <div class="player-info">
+                    <h2 id="player-title" class="player-title"></h2>
+                    <span id="player-year" class="player-year"></span>
+                </div>
+                <button class="btn-close" id="btn-close-player">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M18 6 6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="player-wrapper">
+                <iframe id="player-iframe" 
+                    src="" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen
+                    frameborder="0">
+                </iframe>
+            </div>
+            <div class="player-details">
+                <p id="player-description" class="player-description"></p>
+                <div id="player-genres" class="player-genres"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ADMIN PANEL MODAL ===== -->
+    <div id="admin-modal" class="modal hidden">
+        <div class="modal-backdrop" id="admin-backdrop"></div>
+        <div class="admin-container">
+            <div class="admin-header">
+                <h2>⚙️ Administrar Películas</h2>
+                <button class="btn-close" id="btn-close-admin">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M18 6 6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="admin-body">
+                <!-- ADD MOVIE FORM -->
+                <form id="movie-form" class="movie-form">
+                    <h3>➕ Agregar Película</h3>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="input-title">Título *</label>
+                            <input type="text" id="input-title" placeholder="Ej: El Rey León" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="input-drive-link">Link de Google Drive *</label>
+                            <input type="url" id="input-drive-link" placeholder="https://drive.google.com/file/d/.../view" required>
+                            <small class="form-hint">Pega el link de compartir del archivo de Google Drive</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-year">Año</label>
+                            <input type="number" id="input-year" placeholder="2024" min="1900" max="2030">
+                        </div>
+                        <div class="form-group">
+                            <label for="input-genre">Género</label>
+                            <select id="input-genre">
+                                <option value="">Seleccionar...</option>
+                                <option value="Acción">🎯 Acción</option>
+                                <option value="Aventura">🗺️ Aventura</option>
+                                <option value="Animación">🎨 Animación</option>
+                                <option value="Comedia">😂 Comedia</option>
+                                <option value="Drama">🎭 Drama</option>
+                                <option value="Familiar">👨‍👩‍👧‍👦 Familiar</option>
+                                <option value="Fantasía">🧙 Fantasía</option>
+                                <option value="Terror">👻 Terror</option>
+                                <option value="Romance">💕 Romance</option>
+                                <option value="Ciencia Ficción">🚀 Ciencia Ficción</option>
+                                <option value="Suspenso">🔍 Suspenso</option>
+                                <option value="Documental">📹 Documental</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="input-description">Descripción</label>
+                            <textarea id="input-description" rows="3" placeholder="Una breve descripción de la película..."></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="input-cover">URL de Portada (opcional)</label>
+                            <input type="url" id="input-cover" placeholder="https://image.tmdb.org/...">
+                            <small class="form-hint">Si no pones portada, se generará una automáticamente</small>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full" id="btn-submit-movie">
+                        <span>➕ Agregar Película</span>
+                    </button>
+                </form>
+
+                <!-- MOVIE LIST -->
+                <div class="admin-list">
+                    <h3>📋 Películas Guardadas</h3>
+                    <div id="admin-movies-list" class="admin-movies-list">
+                        <!-- filled by JS -->
+                    </div>
+                </div>
+
+                <!-- IMPORT/EXPORT -->
+                <div class="admin-tools">
+                    <h3>🔧 Herramientas</h3>
+                    <div class="tools-grid">
+                        <button class="btn-tool" id="btn-export">📤 Exportar datos</button>
+                        <button class="btn-tool" id="btn-import">📥 Importar datos</button>
+                        <input type="file" id="file-import" accept=".json" class="hidden">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST NOTIFICATIONS ===== -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <span class="brand-icon">🎬</span>
+            <p>Mesta<span class="brand-accent">Cine</span> — Cine familiar en casa</p>
+            <p class="footer-sub">Hecho con ❤️ para la familia</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
