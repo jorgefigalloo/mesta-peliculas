@@ -346,20 +346,17 @@
     var btnNative = document.getElementById('btn-native-player');
     var fileId = extractDriveFileId(link);
     
-    // Check if it is a direct video link
     if (link.toLowerCase().endsWith('.mp4') || link.toLowerCase().endsWith('.webm') || link.toLowerCase().endsWith('.mkv')) {
         $playerIframe.style.display = 'none';
-        btnNative.style.display = 'none';
         videoPlayer.src = link;
         videoPlayer.style.display = 'block';
         videoPlayer.play().catch(function(e){});
     } else if (fileId) {
-        // Intento forzado de Google Drive streaming
-        $playerIframe.style.display = 'none';
-        btnNative.style.display = 'none';
-        videoPlayer.src = 'https://drive.google.com/uc?export=download&id=' + fileId;
-        videoPlayer.style.display = 'block';
-        videoPlayer.play().catch(function(e){});
+        videoPlayer.style.display = 'none';
+        videoPlayer.pause();
+        videoPlayer.src = '';
+        $playerIframe.src = getDriveEmbedUrl(fileId);
+        $playerIframe.style.display = 'block';
     } else {
         showToast('❌ Link de película inválido', 'error');
         return;
