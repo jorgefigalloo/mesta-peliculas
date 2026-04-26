@@ -117,6 +117,28 @@
         </div>
     </div>
 
+    <!-- ===== PASSWORD MODAL ===== -->
+    <div id="password-modal" class="modal hidden">
+        <div class="modal-backdrop" id="password-backdrop"></div>
+        <div class="admin-container" style="max-width: 400px;">
+            <div class="admin-header">
+                <h2>🔒 Acceso Restringido</h2>
+                <button class="btn-close" id="btn-close-password">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M18 6 6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="admin-body">
+                <p style="color: var(--text-secondary, #999); margin-bottom: 16px;">Introduce la clave de administración para continuar.</p>
+                <form id="password-form" class="form-group">
+                    <input type="password" id="input-password" placeholder="••••••••" required style="width: 100%; padding: 12px; background: #1a1a28; color: white; border: 1px solid #333; border-radius: 8px;">
+                    <button type="submit" class="btn-primary" style="margin-top: 16px; width: 100%;">Ingresar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- ===== ADMIN PANEL MODAL ===== -->
     <div id="admin-modal" class="modal hidden">
         <div class="modal-backdrop" id="admin-backdrop"></div>

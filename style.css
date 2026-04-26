@@ -55,9 +55,11 @@ html {
 }
 
 body {
-    font-family: var(--font-family);
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    background-color: #0a0a0f;
+    color: #f0f0f5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary, #0a0a0f);
+    color: var(--text-primary, #f0f0f5);
     line-height: 1.6;
     min-height: 100vh;
     overflow-x: hidden;
@@ -101,6 +103,7 @@ body {
     right: 0;
     height: var(--navbar-height);
     z-index: 1000;
+    background-color: #0a0a0f;
     background: rgba(10, 10, 15, 0.8);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -410,7 +413,8 @@ body {
     position: relative;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    background: var(--bg-card);
+    background-color: #1a1a28;
+    background: var(--bg-card, #1a1a28);
     border: 1px solid rgba(255,255,255,0.05);
     cursor: pointer;
     transition: all var(--transition-normal);

@@ -91,6 +91,11 @@
     const $adminMoviesList = document.getElementById('admin-movies-list');
     const $fileImport = document.getElementById('file-import');
 
+    // Password modal
+    const $passwordModal = document.getElementById('password-modal');
+    const $passwordForm = document.getElementById('password-form');
+    const $inputPassword = document.getElementById('input-password');
+
     // State
     let currentFilter = 'all';
     let searchQuery = '';
@@ -133,10 +138,15 @@
             renderMovies();
         }, 250));
 
-        // Admin button
-        document.getElementById('btn-admin').addEventListener('click', openAdmin);
+        // Admin / Password buttons
+        document.getElementById('btn-admin').addEventListener('click', openPasswordModal);
+        document.getElementById('btn-add-first').addEventListener('click', openPasswordModal);
         document.getElementById('btn-close-admin').addEventListener('click', closeAdmin);
         document.getElementById('admin-backdrop').addEventListener('click', closeAdmin);
+
+        document.getElementById('btn-close-password').addEventListener('click', closePasswordModal);
+        document.getElementById('password-backdrop').addEventListener('click', closePasswordModal);
+        $passwordForm.addEventListener('submit', handlePasswordSubmit);
 
         // Player
         document.getElementById('btn-close-player').addEventListener('click', closePlayer);
@@ -144,9 +154,6 @@
 
         // Form
         $movieForm.addEventListener('submit', handleFormSubmit);
-
-        // Add first movie button
-        document.getElementById('btn-add-first').addEventListener('click', openAdmin);
 
         // Export / Import
         document.getElementById('btn-export').addEventListener('click', exportData);
@@ -387,16 +394,35 @@
         document.body.style.overflow = '';
     }
 
+    // ===== PASSWORD =====
+    function openPasswordModal() {
+        $inputPassword.value = '';
+        $passwordModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => $inputPassword.focus(), 100);
+    }
+
+    function closePasswordModal() {
+        $passwordModal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    function handlePasswordSubmit(e) {
+        e.preventDefault();
+        const pass = $inputPassword.value.trim();
+        
+        if (pass === 'C@r1ta24') {
+            closePasswordModal();
+            openAdmin();
+        } else {
+            showToast('❌ Clave incorrecta', 'error');
+            $inputPassword.value = '';
+            $inputPassword.focus();
+        }
+    }
+
     // ===== ADMIN =====
     function openAdmin() {
-        const pass = prompt('Introduce la clave de administración:');
-        if (pass !== 'C@r1ta24') {
-            if (pass !== null) {
-                showToast('❌ Clave incorrecta', 'error');
-            }
-            return;
-        }
-        
         $adminModal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         renderAdminList();
