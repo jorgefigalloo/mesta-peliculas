@@ -344,6 +344,7 @@
       tag.textContent = "".concat(genreEmojis[movie.genre] || '🎬', " ").concat(movie.genre);
       $playerGenres.appendChild(tag);
     }
+    document.getElementById('btn-native-player').href = movie.driveLink;
     $playerIframe.src = getDriveEmbedUrl(fileId);
     $playerModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
