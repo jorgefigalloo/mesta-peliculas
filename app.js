@@ -344,6 +344,7 @@
     
     var videoPlayer = document.getElementById('player-video');
     var btnNative = document.getElementById('btn-native-player');
+    var fileId = extractDriveFileId(link);
     
     // Check if it is a direct video link
     if (link.toLowerCase().endsWith('.mp4') || link.toLowerCase().endsWith('.webm') || link.toLowerCase().endsWith('.mkv')) {
@@ -352,19 +353,16 @@
         videoPlayer.src = link;
         videoPlayer.style.display = 'block';
         videoPlayer.play().catch(function(e){});
+    } else if (fileId) {
+        // Intento forzado de Google Drive streaming
+        $playerIframe.style.display = 'none';
+        btnNative.style.display = 'none';
+        videoPlayer.src = 'https://drive.google.com/uc?export=download&id=' + fileId;
+        videoPlayer.style.display = 'block';
+        videoPlayer.play().catch(function(e){});
     } else {
-        var fileId = extractDriveFileId(link);
-        if (!fileId) {
-          showToast('❌ Link de película inválido', 'error');
-          return;
-        }
-        videoPlayer.style.display = 'none';
-        videoPlayer.pause();
-        videoPlayer.src = '';
-        btnNative.style.display = 'block';
-        btnNative.href = link;
-        $playerIframe.src = getDriveEmbedUrl(fileId);
-        $playerIframe.style.display = 'block';
+        showToast('❌ Link de película inválido', 'error');
+        return;
     }
 
     $playerModal.classList.remove('hidden');
