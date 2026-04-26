@@ -389,6 +389,14 @@
 
     // ===== ADMIN =====
     function openAdmin() {
+        const pass = prompt('Introduce la clave de administración:');
+        if (pass !== 'C@r1ta24') {
+            if (pass !== null) {
+                showToast('❌ Clave incorrecta', 'error');
+            }
+            return;
+        }
+        
         $adminModal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         renderAdminList();
