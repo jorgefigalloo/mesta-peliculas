@@ -89,6 +89,7 @@ body {
 }
 
 .gradient-text {
+    color: #a78bfa; /* TV Fallback */
     background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -299,6 +300,7 @@ body {
 .stat-number {
     font-size: 36px;
     font-weight: 800;
+    color: #06b6d4; /* TV Fallback */
     background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

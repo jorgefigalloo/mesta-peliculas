@@ -10,7 +10,7 @@
     function getMovies() {
         try {
             return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        } catch {
+        } catch (e) {
             return [];
         }
     }
@@ -263,7 +263,7 @@
     // ===== RENDER FILTERS =====
     function renderFilters() {
         const movies = getMovies();
-        const genres = [...new Set(movies.map(m => m.genre).filter(Boolean))].sort();
+        const genres = Array.from(new Set(movies.map(m => m.genre).filter(Boolean))).sort();
 
         // Clear all but the "All" button
         const allBtn = $filtersContainer.querySelector('[data-genre="all"]');
@@ -566,7 +566,7 @@
                 saveMovies(existing);
                 renderAll();
                 showToast(`📥 ${added} película${added !== 1 ? 's' : ''} importada${added !== 1 ? 's' : ''}`, 'success');
-            } catch {
+            } catch (e) {
                 showToast('❌ Error al importar datos', 'error');
             }
         };
@@ -575,7 +575,8 @@
     }
 
     // ===== TOAST =====
-    function showToast(message, type = 'info') {
+    function showToast(message, type) {
+        type = type || 'info';
         const container = document.getElementById('toast-container');
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
