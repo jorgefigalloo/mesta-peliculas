@@ -329,11 +329,8 @@
 
   // ===== PLAYER =====
   function openPlayer(movie) {
-    var fileId = extractDriveFileId(movie.driveLink);
-    if (!fileId) {
-      showToast('❌ Link de Google Drive inválido', 'error');
-      return;
-    }
+    var link = movie.driveLink || '';
+    
     $playerTitle.textContent = movie.title;
     $playerYear.textContent = movie.year || '';
     $playerDescription.textContent = movie.description || 'Sin descripción disponible.';
@@ -344,14 +341,43 @@
       tag.textContent = "".concat(genreEmojis[movie.genre] || '🎬', " ").concat(movie.genre);
       $playerGenres.appendChild(tag);
     }
-    document.getElementById('btn-native-player').href = movie.driveLink;
-    $playerIframe.src = getDriveEmbedUrl(fileId);
+    
+    var videoPlayer = document.getElementById('player-video');
+    var btnNative = document.getElementById('btn-native-player');
+    
+    // Check if it is a direct video link
+    if (link.toLowerCase().endsWith('.mp4') || link.toLowerCase().endsWith('.webm') || link.toLowerCase().endsWith('.mkv')) {
+        $playerIframe.style.display = 'none';
+        btnNative.style.display = 'none';
+        videoPlayer.src = link;
+        videoPlayer.style.display = 'block';
+        videoPlayer.play().catch(function(e){});
+    } else {
+        var fileId = extractDriveFileId(link);
+        if (!fileId) {
+          showToast('❌ Link de película inválido', 'error');
+          return;
+        }
+        videoPlayer.style.display = 'none';
+        videoPlayer.pause();
+        videoPlayer.src = '';
+        btnNative.style.display = 'block';
+        btnNative.href = link;
+        $playerIframe.src = getDriveEmbedUrl(fileId);
+        $playerIframe.style.display = 'block';
+    }
+
     $playerModal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
   }
   function closePlayer() {
     $playerModal.classList.add('hidden');
     $playerIframe.src = '';
+    
+    var videoPlayer = document.getElementById('player-video');
+    videoPlayer.pause();
+    videoPlayer.src = '';
+    
     document.body.style.overflow = '';
   }
 

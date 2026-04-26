@@ -103,16 +103,17 @@
                 </button>
             </div>
             <div class="player-wrapper">
-                <a id="btn-native-player" href="#" target="_blank" class="btn-primary" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; text-decoration: none; padding: 15px 30px; font-size: 18px; box-shadow: 0 0 20px rgba(0,0,0,0.8);">
-                    ▶ Abrir Reproductor Nativo
+                <a id="btn-native-player" href="#" target="_blank" class="btn-primary" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; text-decoration: none; padding: 15px 30px; font-size: 18px; box-shadow: 0 0 20px rgba(0,0,0,0.8);">
+                    ▶ Abrir en Google Drive
                 </a>
+                <video id="player-video" controls style="display: none; position: absolute; top:0; left:0; width: 100%; height: 100%; z-index: 5; background: #000;"></video>
                 <iframe id="player-iframe" 
                     src="" 
                     allow="autoplay; fullscreen; encrypted-media" 
                     webkitallowfullscreen 
                     mozallowfullscreen 
                     allowfullscreen
-                    style="border:none;"
+                    style="border:none; display:none;"
                     frameborder="0">
                 </iframe>
             </div>
@@ -167,9 +168,9 @@
                             <input type="text" id="input-title" placeholder="Ej: El Rey León" required>
                         </div>
                         <div class="form-group full-width">
-                            <label for="input-drive-link">Link de Google Drive *</label>
-                            <input type="url" id="input-drive-link" placeholder="https://drive.google.com/file/d/.../view" required>
-                            <small class="form-hint">Pega el link de compartir del archivo de Google Drive</small>
+                            <label for="input-drive-link">Link de Película (Drive o MP4) *</label>
+                            <input type="url" id="input-drive-link" placeholder="https://drive.google.com/file/... o https://...video.mp4" required>
+                            <small class="form-hint">Pega el link de Google Drive, o un link directo (.mp4/.mkv)</small>
                         </div>
                         <div class="form-group">
                             <label for="input-year">Año</label>
